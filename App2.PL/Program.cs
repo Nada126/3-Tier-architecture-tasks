@@ -39,11 +39,13 @@ builder.Services.AddDbContext<App2DbContext>(options=>options.UseSqlServer(conne
 //builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
 //builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
+//Dependency Injection Using Extension Method
 builder.Services.AddBuisnessInDAL();
 builder.Services.AddBuisnessInBLL();
 
 
 var app = builder.Build();
+
 var supportedCultures = new[] {
                       new CultureInfo("ar-EG"),
                       new CultureInfo("en-US"),

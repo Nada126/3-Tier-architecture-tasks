@@ -23,14 +23,11 @@ namespace App2.BLL.Service.Implementation
                 string defaultImage = "default.jpg";
                 string imageToUse = defaultImage;
 
-                // ✅ Handle image upload
                 if (model.ImageFile != null)
                 {
-                    // Save the uploaded image in wwwroot/Files
                     imageToUse = Upload.UploadFile("Files", model.ImageFile);
                 }
 
-                // Create employee
                 var emp = new Employee(
                     model.Name,
                     model.Age,
@@ -122,7 +119,7 @@ namespace App2.BLL.Service.Implementation
             }
         }
 
-        //// Edit employee
+        // Edit employee
         public Response<string> EditEmployee(int id, EditEmployeeVM model)
         {
             try
@@ -171,7 +168,7 @@ namespace App2.BLL.Service.Implementation
 
 
 
-        //// Delete employee (soft delete)
+        // Delete employee (soft delete)
         public Response<string> DeleteEmployee(int id)
         {
             try
