@@ -1,0 +1,90 @@
+﻿@using App2.BLL.ModelVM.Employee;
+@using App2.BLL.ModelVM.Department;
+@using App2.BLL.ModelVM.ResponseResult;
+@model CreateEmployeeVM
+@{
+    var departments =(Response<List<GetDepartmentVM>>)ViewBag.Departments;
+}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-lg border-0 w-50">
+        <div class="card-header bg-success text-white text-center">
+            <h4 class="mb-0">@SharedLocalizer["Add New Employee"]</h4>
+        </div>
+
+        <div class="card-body">
+            <form asp-action="Create" asp-controller="Employee" enctype="multipart/form-data">
+                @if (ViewBag.Error != null)
+                {
+                    <p>@ViewBag.Error</p>
+                }
+                <div class="text-center mb-3">
+                    <img id="preview" src="#" alt="Image Preview" class="img-thumbnail shadow-sm"
+                         style="max-width: 150px; display: none; border-radius: 50%;" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="Name" class="form-label fw-semibold">@SharedLocalizer["Name"]</label>
+                    <input asp-for="Name" type="text" class="form-control" id="Name" placeholder="@SharedLocalizer["Enter employee name"]">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Salary" class="form-label fw-semibold">@SharedLocalizer["Salary"]</label>
+                    <input asp-for="Salary" type="number" class="form-control" id="Salary" placeholder="@SharedLocalizer["Enter salary"]">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Age" class="form-label fw-semibold">@SharedLocalizer["Age"]</label>
+                    <input asp-for="Age" type="number" class="form-control" id="Age" placeholder="@SharedLocalizer["Enter Age"]">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Image" class="form-label fw-semibold">@SharedLocalizer["Profile Image"]</label>
+                    <input asp-for="ImageFile" type="file" class="form-control" id="Image" accept="image/*" onchange="previewImage(event)">
+                </div>
+ 
+                <div class="mb-3">
+                    @if (departments.IsHaveErrorOrNot)
+                    {
+                        <p>@departments.ErrorMessage</p>
+                    }
+                    else
+                    {
+                        <div class="mb-3">
+                        <label for="DepartmentName" class="form-label fw-semibold">@SharedLocalizer["Department"]</label>
+                        <select asp-for="DepartmentId" class="form-select" aria-label="Default select example">
+                            @foreach(var item in departments.result)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        </div>
+                        <button type="submit" class="btn btn-success px-4 me-2">@SharedLocalizer["Save"]</button>
+                        <a asp-action="Index" class="btn btn-secondary px-4">@SharedLocalizer["Cancel"]</a>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function previewImage(event) {
+            const preview = document.getElementById('preview');
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    preview.src = e.target.result;
+                    preview.style.display = 'inline-block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '#';
+                preview.style.display = 'none';
+            }
+        }
+    </script>
+}

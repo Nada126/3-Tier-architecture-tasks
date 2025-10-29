@@ -1,0 +1,64 @@
+﻿@using App2.BLL.ModelVM.Employee;
+@using App2.BLL.ModelVM.ResponseResult;
+@model Response<List<GetEmployeeVM>>
+
+<div class="container mt-5">
+    <div class="card shadow border-0">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">@SharedLocalizer["Employees List"]</h4>
+            <a asp-action="Create" asp-controller="Employee" class="btn btn-light btn-sm fw-semibold">
+                @SharedLocalizer["Add New Employee"]
+            </a>
+        </div>
+
+        <div class="card-body">
+            @if (Model.IsHaveErrorOrNot)
+            {
+                <div class="alert alert-danger text-center">@Model.ErrorMessage</div>
+            }
+            else if (Model.result == null || !Model.result.Any())
+            {
+                <div class="alert alert-info text-center">@SharedLocalizer["No employees found."]</div>
+            }
+            else
+            {
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@SharedLocalizer["Image"]</th>
+                            <th>@SharedLocalizer["Name"]</th>
+                            <th>@SharedLocalizer["Age"]</th>
+                            <th>@SharedLocalizer["Salary"]</th>
+                            <th>@SharedLocalizer["Department"]</th>
+                            <th class="text-center">@SharedLocalizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var emp in Model.result)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="~/Files/@(string.IsNullOrEmpty(emp.Image) ? "default.jpg" : emp.Image)"
+                                         alt="@emp.Name"
+                                         style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                                </td>
+                                <td>@emp.Name</td>
+                                <td>@emp.Age</td>
+                                <td>@emp.Salary.ToString("C")</td>
+                                <td>@(emp.DepartmentName ?? "No Department")</td>
+                                <td class="text-center">
+                                    <a asp-action="Edit" asp-route-id="@emp.Id" class="btn btn-outline-warning btn-sm me-1">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@emp.Id" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
