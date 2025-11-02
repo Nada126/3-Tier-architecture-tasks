@@ -55,7 +55,7 @@ namespace App2.BLL.Service.Implementation
         {
             try
             {
-                var department = new Department(0, model.Name, model.Area, "Nada");
+                var department = new Department( model.Name, model.Area, "Nada");
                 var result = departmentRepo.Add(department);
 
                 if (result)

@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public double Area { get; set; }
+        public string Area { get; set; }
         public List<GetEmployeeVM>? Employees { get; set; }
     }
 }

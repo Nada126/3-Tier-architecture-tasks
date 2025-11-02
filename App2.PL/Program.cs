@@ -3,9 +3,12 @@ using App2.BLL.Service.Abstraction;
 using App2.BLL.Service.Implementation;
 using App2.DAL.Common;
 using App2.DAL.Database;
+using App2.DAL.Entity;
 using App2.DAL.Repo.Abstraction;
 using App2.DAL.Repo.Implemetation;
 using App2.PL.Language;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +42,39 @@ builder.Services.AddDbContext<App2DbContext>(options=>options.UseSqlServer(conne
 //builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
 //builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
+
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+//    options =>
+//    {
+//        options.LoginPath = new PathString("/Account/Login");
+//        options.AccessDeniedPath = new PathString("/Account/Login");
+//    });
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/Login";
+});
+
+
+//builder.Services.AddIdentityCore<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
+//                .AddRoles<IdentityRole>()
+//                .AddEntityFrameworkStores<App2DbContext>()
+//                .AddTokenProvider<DataProtectorTokenProvider<Employee>>(TokenOptions.DefaultProvider);
+
+builder.Services.AddIdentity<Employee, IdentityRole>(options =>
+{
+    // Default Password settings.
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 0;
+}).AddEntityFrameworkStores<App2DbContext>().AddDefaultTokenProviders();
+
+
 //Dependency Injection Using Extension Method
 builder.Services.AddBuisnessInDAL();
 builder.Services.AddBuisnessInBLL();
@@ -63,7 +99,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseRequestLocalization(new RequestLocalizationOptions
@@ -79,8 +115,12 @@ app.UseRequestLocalization(new RequestLocalizationOptions
 });
 
 
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();

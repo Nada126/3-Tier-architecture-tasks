@@ -7,7 +7,7 @@
             <a asp-action="Index" class="btn btn-light btn-sm">@SharedLocalizer["Back"]</a>
         </div>
         <div class="card-body">
-            <p><strong>@SharedLocalizer["Area:"]</strong> @Model.Area</p>
+            <p><strong>@SharedLocalizer["Area"]</strong> @Model.Area</p>
 
             <h5 class="mt-4">@SharedLocalizer["Employees"]</h5>
             @if (Model.Employees != null && Model.Employees.Any())

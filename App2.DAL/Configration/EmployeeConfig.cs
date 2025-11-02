@@ -4,27 +4,25 @@
 	{
 		public void Configure(EntityTypeBuilder<Employee> builder)
 		{
-			builder.ToTable("Employee");
+            builder.ToTable("Employees");
 
-			builder.HasKey(e => e.Id);
+            //builder.Property(e => e.Name)
+            //	.IsRequired()
+            //	.HasMaxLength(100);
 
-			builder.Property(e => e.Name)
-				.IsRequired()
-				.HasMaxLength(100);
+            //builder.Property(e => e.Age)
+            //	.IsRequired();
 
-			builder.Property(e => e.Age)
-				.IsRequired();
+            //builder.Property(e => e.Salary)
+            //	.HasColumnType("decimal(8,2)");
 
-			builder.Property(e => e.Salary)
-				.HasColumnType("decimal(8,2)");
+            //builder.Property(e => e.Image)
+            //	.HasMaxLength(255);
 
-			builder.Property(e => e.Image)
-				.HasMaxLength(255);
-
-			builder.HasOne(e => e.Department)
-				   .WithMany(d => d.Employees)
-				   .HasForeignKey(e => e.DepartmentId)
-				   .OnDelete(DeleteBehavior.SetNull);
-		}
+            //builder.HasOne(e => e.Department)
+            //	   .WithMany(d => d.Employees)
+            //	   .HasForeignKey(e => e.DepartmentId)
+            //	   .OnDelete(DeleteBehavior.SetNull);
+        }
 	}
 }

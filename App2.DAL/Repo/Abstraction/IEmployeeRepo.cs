@@ -7,10 +7,10 @@ namespace App2.DAL.Repo.Abstraction
         //commands
         bool Add(Employee employee);
         bool Edit (Employee employee);
-        bool ToggleStatus(int id);    // for deletion
+        bool ToggleStatus(string id);    // for deletion
 
         //queries
-        Employee GetEmployeeById(int id);
+        Employee GetEmployeeById(string id);
         List<Employee> GetAll(Expression<Func<Employee,bool>>? Filter=null);
          
     }

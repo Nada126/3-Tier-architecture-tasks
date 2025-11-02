@@ -1,110 +1,103 @@
-﻿
+﻿using App2.DAL.Database;
+using App2.DAL.Entity;
+using App2.DAL.Repo.Abstraction;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+
 namespace App2.DAL.Repo.Implemetation
 {
     public class EmployeeRepo : IEmployeeRepo
     {
         private readonly App2DbContext Db;
-        public EmployeeRepo(App2DbContext Db) { this.Db = Db; }
+        public EmployeeRepo(App2DbContext Db)
+        {
+            this.Db = Db;
+        }
+
         public bool Add(Employee employee)
         {
             try
             {
-                var result = Db.Employees.Add(employee);
+                var result = Db.Users.Add(employee);
                 Db.SaveChanges();
-                if (result.Entity.Id > 0)    //new employee gets an auto-generated ID
-                    return true;
-                return false; 
+
+                return !string.IsNullOrEmpty(result.Entity.Id);
             }
-            catch (Exception ex)
+            catch
             {
-                throw;
-            }
-        }
-
-		public bool Edit(Employee newEmployee)
-		{
-			try
-			{
-				var oldEmployee = Db.Employees.FirstOrDefault(a => a.Id == newEmployee.Id);
-				if (oldEmployee != null)
-				{
-					var result = oldEmployee.Update(
-						newEmployee.Name,
-						newEmployee.Age,
-						newEmployee.Salary,
-						newEmployee.Image,
-						newEmployee.DepartmentId,
-						"Nada"
-					);
-
-					if (result)
-					{
-						Db.SaveChanges();
-						return true;
-					}
-				}
-				return false;
-			}
-			catch (Exception)
-			{
-				throw;
-			}
-		}
-
-        //public List<Employee> GetActiveEmployees()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public List<Employee> GetAll(Expression<Func<Employee, bool>>? Filter = null)
-        {
-            try
-            {
-                IQueryable<Employee> query = Db.Employees.Include(e => e.Department); 
-
-                if (Filter != null)
-                    query = query.Where(Filter);
-
-                return query.ToList();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public Employee GetEmployeeById(int id)
-        {
-            try
-            {
-                var employee = Db.Employees.Include(e => e.Department).FirstOrDefault(e => e.Id == id);
-                return employee;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public bool ToggleStatus(int id)
-        {
-            try
-            {
-                var OldEmployee = Db.Employees.Where(a => a.Id == id).FirstOrDefault();
-                if (OldEmployee != null)
-                {
-                    var result = OldEmployee.ToggleStatus("Nada");
-                    if (result)
-                    {
-                        Db.SaveChanges();
-                        return true;
-                    }
-                }
                 return false;
             }
-            catch (Exception ex)
+        }
+
+        public bool Edit(Employee newEmployee)
+        {
+            try
             {
-                throw;
+                var oldEmployee = Db.Users.FirstOrDefault(e => e.Id == newEmployee.Id);
+                if (oldEmployee == null)
+                    return false;
+
+                bool updated = oldEmployee.Update(
+                    newEmployee.Name,
+                    newEmployee.Age,
+                    newEmployee.Salary,
+                    newEmployee.Image,
+                    newEmployee.DepartmentId,
+                    "Nada" 
+                );
+
+                if (updated)
+                {
+                    Db.SaveChanges();
+                    return true;
+                }
+
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<Employee> GetAll(Expression<Func<Employee, bool>>? filter = null)
+        {
+            IQueryable<Employee> query = Db.Users.Include(e => e.Department);
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            return query.ToList();
+        }
+
+        public Employee GetEmployeeById(string id)
+        {
+            return Db.Users
+                     .Include(e => e.Department)
+                     .FirstOrDefault(e => e.Id == id);
+        }
+
+        public bool ToggleStatus(string id)
+        {
+            try
+            {
+                var employee = Db.Users.FirstOrDefault(e => e.Id == id);
+                if (employee == null)
+                    return false;
+
+                bool toggled = employee.ToggleStatus("Nada");  
+
+                if (toggled)
+                {
+                    Db.SaveChanges();
+                    return true;
+                }
+
+                return false;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

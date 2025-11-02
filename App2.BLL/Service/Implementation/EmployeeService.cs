@@ -1,4 +1,5 @@
 ﻿using App2.BLL.Helper;
+using App2.BLL.ModelVM.AccountVM;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,17 +17,17 @@ namespace App2.BLL.Service.Implementation
         }
 
         //Add new employee
-        public Response<CreateEmployeeVM> Create(CreateEmployeeVM model)
+        public Response<RegisterEmployeeVM> Create(RegisterEmployeeVM model)
         {
             try
             {
                 string defaultImage = "default.jpg";
                 string imageToUse = defaultImage;
 
-                if (model.ImageFile != null)
-                {
-                    imageToUse = Upload.UploadFile("Files", model.ImageFile);
-                }
+                //if (model.ImageFile != null)
+                //{
+                //    imageToUse = Upload.UploadFile("Files", model.ImageFile);
+                //}
 
                 var emp = new Employee(
                     model.Name,
@@ -34,19 +35,20 @@ namespace App2.BLL.Service.Implementation
                     model.Salary,
                     imageToUse,
                     model.DepartmentId,
-                    "Nada"
+                    "Nada",
+                    model.UserName
                 );
 
                 var result = employeeRepo.Add(emp);
 
                 if (result)
-                    return new Response<CreateEmployeeVM>(model, null, false);
+                    return new Response<RegisterEmployeeVM>(model, null, false);
 
-                return new Response<CreateEmployeeVM>(model, "There was a problem saving the employee.", true);
+                return new Response<RegisterEmployeeVM>(model, "There was a problem saving the employee.", true);
             }
             catch (Exception ex)
             {
-                return new Response<CreateEmployeeVM>(null, ex.Message, true);
+                return new Response<RegisterEmployeeVM>(null, ex.Message, true);
             }
         }
 
@@ -102,7 +104,7 @@ namespace App2.BLL.Service.Implementation
         }
 
         // Get employee by ID
-        public Response<GetEmployeeVM> GetById(int id)
+        public Response<GetEmployeeVM> GetById(string id)
         {
             try
             {
@@ -120,7 +122,7 @@ namespace App2.BLL.Service.Implementation
         }
 
         // Edit employee
-        public Response<string> EditEmployee(int id, EditEmployeeVM model)
+        public Response<string> EditEmployee(string id, EditEmployeeVM model)
         {
             try
             {
@@ -169,7 +171,7 @@ namespace App2.BLL.Service.Implementation
 
 
         // Delete employee (soft delete)
-        public Response<string> DeleteEmployee(int id)
+        public Response<string> DeleteEmployee(string id)
         {
             try
             {

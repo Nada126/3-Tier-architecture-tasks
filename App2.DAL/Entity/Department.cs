@@ -1,24 +1,25 @@
-﻿ 
-namespace App2.DAL.Entity
+﻿namespace App2.DAL.Entity
 {
-	public class Department
-	{
-		protected Department() { }
-
-		public Department(int id,string name, double area,string createdUser)
-		{
-            Id = id;
-			Name = name;
-			Area = area;
+    public class Department
+    {
+        protected Department()
+        {
+            Employees = new List<Employee>();
+        }
+        public Department(string name, string area, string createdUser)
+        {
+            Name = name;
+            Area = area;
             CreatedBy = createdUser;
             CreatedOn = DateTime.Now;
+            Employees = new List<Employee>();
         }
 
-		public int Id { get; private set; }
-		public string Name { get; private set; }
-		public double Area { get; private set; }
-		public List<Employee> Employees { get; private set; }
-        public DateTime CreatedOn { get; private set; }
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+        public string Area { get; private set; }
+        public List<Employee> Employees { get; private set; }
+        public DateTime CreatedOn { get; private set; } = DateTime.Now;
         public DateTime? LastUpdatedOn { get; private set; }
         public DateTime? DeletedOn { get; private set; }
         public string? CreatedBy { get; private set; }
@@ -26,7 +27,7 @@ namespace App2.DAL.Entity
         public string? DeletedBy { get; private set; }
         public bool IsDeleted { get; private set; }
 
-        public bool Update(string? name, double? area ,string userModified)
+        public bool Update(string? name, string? area, string userModified)
         {
             if (string.IsNullOrEmpty(userModified))
                 return false;
@@ -34,26 +35,24 @@ namespace App2.DAL.Entity
             if (!string.IsNullOrEmpty(name))
                 Name = name;
 
-            if (area.HasValue)
-                Area = area.Value;
+            if (!string.IsNullOrEmpty(area))
+                Area = area;
 
             LastUpdatedOn = DateTime.Now;
             UpdatedBy = userModified;
             return true;
         }
 
-
         public bool ToggleStatus(string deletedUser)
         {
-            if (!string.IsNullOrWhiteSpace(deletedUser))
-            {
-                IsDeleted = !IsDeleted;
-                DeletedBy = deletedUser;
-                DeletedOn = DateTime.Now;
-                return true;
-            }
-            return false;
-        }
+            if (string.IsNullOrWhiteSpace(deletedUser))
+                return false;
 
+            IsDeleted = !IsDeleted;
+            DeletedBy = deletedUser;
+            DeletedOn = IsDeleted ? DateTime.Now : null;  
+
+            return true;
+        }
     }
 }

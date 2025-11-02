@@ -1,4 +1,5 @@
-﻿using App2.BLL.ModelVM.Employee;
+﻿using App2.BLL.ModelVM.AccountVM;
+using App2.BLL.ModelVM.Employee;
 using App2.BLL.ModelVM.ResponseResult;
 
 namespace App2.BLL.Service.Abstraction
@@ -7,10 +8,10 @@ namespace App2.BLL.Service.Abstraction
     {
         Response<List<GetEmployeeVM>> GetActiveEmployee();
         Response<List<GetEmployeeVM>> GetNotActiveEmployee();
-        Response<CreateEmployeeVM>Create(CreateEmployeeVM model);
-        Response<GetEmployeeVM> GetById(int id);
-        Response<string> EditEmployee(int id, EditEmployeeVM model);
-        Response<string> DeleteEmployee(int id);
+        Response<RegisterEmployeeVM>Create(RegisterEmployeeVM model);
+        Response<GetEmployeeVM> GetById(string id);
+        Response<string> EditEmployee(string id, EditEmployeeVM model);
+        Response<string> DeleteEmployee(string id);
 
 
     }

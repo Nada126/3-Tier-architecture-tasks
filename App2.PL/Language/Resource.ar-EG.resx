@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Actions" xml:space="preserve">
-    <value>حذف/تعديل/عرض</value>
+    <value>عرض/تعديل/حذف</value>
   </data>
   <data name="Add Department" xml:space="preserve">
     <value>إضافة قسم</value>
@@ -133,7 +133,7 @@
     <value>هل أنت متأكد من حذف</value>
   </data>
   <data name="Area" xml:space="preserve">
-    <value>المساحة </value>
+    <value>المنطقة</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>رجوع</value>
@@ -174,8 +174,8 @@
   <data name="Enter Age" xml:space="preserve">
     <value>أدخل العمر</value>
   </data>
-  <data name="Enter area value" xml:space="preserve">
-    <value>أدخل المساحة الخاصة بالقسم</value>
+  <data name="Enter the area" xml:space="preserve">
+    <value>أدخل المنطقة الخاصة بالقسم</value>
   </data>
   <data name="Enter department name" xml:space="preserve">
     <value>أدخل اسم القسم</value>
@@ -215,5 +215,44 @@
   </data>
   <data name="Yes, Delete" xml:space="preserve">
     <value>حذف</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>تسجيل خروج</value>
+  </data>
+  <data name="Sign up" xml:space="preserve">
+    <value>تسجيل  </value>
+  </data>
+  <data name="Create Account" xml:space="preserve">
+    <value>إنشاء حساب</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="Enter username" xml:space="preserve">
+    <value>ادخل اسم المستخدم</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة السر</value>
+  </data>
+  <data name="Enter password" xml:space="preserve">
+    <value>ادخل كلمة السر </value>
+  </data>
+  <data name="Confirm Password" xml:space="preserve">
+    <value>تأكيد كلمة السر</value>
+  </data>
+  <data name="Confirm employee password" xml:space="preserve">
+    <value>أكد كلمة السر</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>تسجيل دخول</value>
+  </data>
+  <data name="Don't have an account?" xml:space="preserve">
+    <value>لا تمتلك حساب </value>
+  </data>
+  <data name="Register here" xml:space="preserve">
+    <value>انشأ حساب </value>
+  </data>
+  <data name="Select Department" xml:space="preserve">
+    <value>اختار القسم</value>
   </data>
 </root>

@@ -7,15 +7,23 @@
         </div>
 
         <div class="card-body text-center">
-            <p>@SharedLocalizer["Are you sure you want to delete"]<strong>@Model.Name</strong>?</p>
+            <p>
+                @SharedLocalizer["Are you sure you want to delete"]
+                <strong>@Model.Name</strong>?
+            </p>
 
             <img src="~/Files/@(string.IsNullOrEmpty(Model.Image) ? "default.jpg" : Model.Image)"
-                 alt="@Model.Name" class="img-thumbnail mb-3" style="max-width: 120px; border-radius: 50%;" />
+                 class="img-thumbnail shadow-sm mb-3"
+                 style="max-width: 120px; border-radius: 50%; object-fit: cover;" />
 
-            <form asp-action="DeleteConfirmed" asp-controller="Employee" method="post">
+            <form asp-action="DeleteConfirmed" method="post">
                 <input type="hidden" name="id" value="@Model.Id" />
-                <button type="submit" class="btn btn-danger px-4 me-2">@SharedLocalizer["Yes, Delete"]</button>
-                <a asp-action="Index" class="btn btn-secondary px-4">@SharedLocalizer["Cancel"]</a>
+                <button type="submit" class="btn btn-danger px-4 me-2">
+                    @SharedLocalizer["Yes, Delete"]
+                </button>
+                <a asp-action="Index" class="btn btn-secondary px-4">
+                    @SharedLocalizer["Cancel"]
+                </a>
             </form>
         </div>
     </div>
