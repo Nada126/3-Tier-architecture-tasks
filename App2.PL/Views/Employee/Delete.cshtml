@@ -1,28 +1,50 @@
 ﻿@model App2.BLL.ModelVM.Employee.GetEmployeeVM
 
-<div class="container mt-5 d-flex justify-content-center">
-    <div class="card shadow-lg border-0 w-50">
-        <div class="card-header bg-danger text-white text-center">
-            <h4 class="mb-0">@SharedLocalizer["Delete Employee"]</h4>
-        </div>
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="mb-0 text-danger">@SharedLocalizer["Delete Employee"]</h4>
+        <a asp-action="Index" class="btn btn-light btn-sm">
+            <i class="fas fa-arrow-left"></i> @SharedLocalizer["Back to List"]
+        </a>
+    </div>
 
-        <div class="card-body text-center">
-            <p>
-                @SharedLocalizer["Are you sure you want to delete"]
-                <strong>@Model.Name</strong>?
-            </p>
+    <div class="card-body">
+        <div class="text-center">
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                @SharedLocalizer["Are you sure you want to delete this employee?"]
+            </div>
 
             <img src="~/Files/@(string.IsNullOrEmpty(Model.Image) ? "default.jpg" : Model.Image)"
-                 class="img-thumbnail shadow-sm mb-3"
-                 style="max-width: 120px; border-radius: 50%; object-fit: cover;" />
+                 class="rounded-circle shadow-sm mb-4"
+                 style="width: 120px; height: 120px; object-fit: cover; border: 3px solid var(--border-color);" />
+
+            <h5 class="mb-3">@Model.Name</h5>
+
+            <div class="row justify-content-center mb-4">
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span class="fw-semibold">@SharedLocalizer["Age"]:</span>
+                        <span>@Model.Age</span>
+                    </div>
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span class="fw-semibold">@SharedLocalizer["Salary"]:</span>
+                        <span>@Model.Salary</span>
+                    </div>
+                    <div class="d-flex justify-content-between py-2">
+                        <span class="fw-semibold">@SharedLocalizer["Department"]:</span>
+                        <span>@(Model.DepartmentName ?? "--")</span>
+                    </div>
+                </div>
+            </div>
 
             <form asp-action="DeleteConfirmed" method="post">
                 <input type="hidden" name="id" value="@Model.Id" />
                 <button type="submit" class="btn btn-danger px-4 me-2">
-                    @SharedLocalizer["Yes, Delete"]
+                    <i class="fas fa-trash"></i> @SharedLocalizer["Yes, Delete"]
                 </button>
                 <a asp-action="Index" class="btn btn-secondary px-4">
-                    @SharedLocalizer["Cancel"]
+                    <i class="fas fa-times"></i> @SharedLocalizer["Cancel"]
                 </a>
             </form>
         </div>

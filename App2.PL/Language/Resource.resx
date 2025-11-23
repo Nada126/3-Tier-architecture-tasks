@@ -129,11 +129,11 @@
   <data name="Age" xml:space="preserve">
     <value>Age</value>
   </data>
-  <data name="Are you sure you want to delete" xml:space="preserve">
-    <value>Are you sure you want to delete</value>
+  <data name="Are you sure you want to delete this employee?" xml:space="preserve">
+    <value>Are you sure you want to delete this employee?</value>
   </data>
   <data name="Area" xml:space="preserve">
-    <value>Area:</value>
+    <value>Area</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
@@ -254,5 +254,26 @@
   </data>
   <data name="Select Department" xml:space="preserve">
     <value>Select Department</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Back to List" xml:space="preserve">
+    <value>Back to List</value>
+  </data>
+  <data name="Are you sure you want to delete this department?" xml:space="preserve">
+    <value>Are you sure you want to delete this department?</value>
+  </data>
+  <data name="Department Information" xml:space="preserve">
+    <value>Department Information</value>
+  </data>
+  <data name="Back to Login" xml:space="preserve">
+    <value>Back to Login</value>
   </data>
 </root>

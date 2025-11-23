@@ -28,7 +28,7 @@
 <body class="d-flex flex-column min-vh-100 bg-light">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <nav class="navbar navbar-expand-lg navbar-dark px-4">
         <a class="navbar-brand fw-bold" href="@Url.Action("Index", "Employee")">@SharedLocalizer["Employee Management"]</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navItems">
             <span class="navbar-toggler-icon"></span>
@@ -41,7 +41,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Employee")">@SharedLocalizer["Employees"]</a>
+                    <a class="nav-link active" href="@Url.Action("Index", "Employee")">@SharedLocalizer["Employees"]</a>
                 </li>
 
                 <!-- Language Switch -->
@@ -88,7 +88,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3 mt-auto">
+    <footer class="text-white text-center py-3 mt-auto">
         <small>&copy; 2025 Employee Management</small>
     </footer>
 

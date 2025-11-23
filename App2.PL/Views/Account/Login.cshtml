@@ -1,42 +1,67 @@
 ﻿@using App2.BLL.ModelVM.AccountVM
 @model LoginVM
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card shadow-lg border-0 w-50">
-        <div class="card-header bg-primary text-white text-center">
-            <h3 class="mb-0"> @SharedLocalizer["Login"]</h3>
-        </div>
-        <div class="card-body">
-            <form asp-action="Login" asp-controller="Account" method="post">
+@if (TempData["AuthError"] != null)
+{
+    <div class="alert alert-danger">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        @TempData["AuthError"]
+    </div>
+}
 
-                <!-- Username -->
-                <div class="mb-3">
-                    <label asp-for="UserName" class="form-label fw-semibold"> @SharedLocalizer["UserName"]</label>
-                    <input asp-for="UserName" class="form-control" placeholder=" @SharedLocalizer["Enter username"]" />
-                    <span asp-validation-for="UserName" class="text-danger"></span>
-                </div>
+<div class="card shadow-sm border-0 mt-4 mx-auto" style="max-width: 500px;">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">@SharedLocalizer["Login"]</h4>
+        @* <a href="/" class="btn btn-light btn-sm">
+            <i class="fas fa-home"></i> @SharedLocalizer["Home"]
+        </a> *@
+    </div>
 
-                <!-- Password -->
-                <div class="mb-3">
-                    <label asp-for="Password" class="form-label fw-semibold"> @SharedLocalizer["Password"]</label>
-                    <input asp-for="Password" type="password" class="form-control" placeholder=" @SharedLocalizer["Enter password"]" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
+    <div class="card-body">
+        <!-- Error Message for Invalid Login -->
+        @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty]?.Errors?.Count > 0)
+        {
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                @ViewData.ModelState[string.Empty].Errors.First().ErrorMessage
+            </div>
+        }
 
-                <!-- Submit -->
-                <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary"> @SharedLocalizer["Login"]</button>
-                </div>
-            </form>
-        </div>
+        <form asp-action="Login" asp-controller="Account" method="post" class="row g-3">
+            <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+            <!-- Username -->
+            <div class="col-12">
+                <label asp-for="UserName" class="form-label fw-semibold">@SharedLocalizer["UserName"]</label>
+                <input asp-for="UserName" class="form-control" placeholder="@SharedLocalizer["Enter username"]" />
+                <span asp-validation-for="UserName" class="text-danger small"></span>
+            </div>
 
-        <div class="card-footer text-center">
-            <small> @SharedLocalizer["Don't have an account?"] <a asp-action="Register" asp-controller="Account"> @SharedLocalizer["Register here"]</a></small>
-        </div>
+            <!-- Password -->
+            <div class="col-12">
+                <label asp-for="Password" class="form-label fw-semibold">@SharedLocalizer["Password"]</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="@SharedLocalizer["Enter password"]" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+
+            <!-- Submit -->
+            <div class="col-12 pt-3">
+                <button type="submit" class="btn btn-primary w-100 py-2">
+                    <i class="fas fa-sign-in-alt me-2"></i> @SharedLocalizer["Login"]
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-footer text-center bg-light">
+        <small class="text-muted">
+            @SharedLocalizer["Don't have an account?"]
+            <a asp-action="Register" asp-controller="Account" class="text-primary text-decoration-none">
+                @SharedLocalizer["Register here"]
+            </a>
+        </small>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-

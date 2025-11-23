@@ -89,23 +89,46 @@ namespace App2.PL.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Login() => View();
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginVM model)
+        public IActionResult Login(string? returnUrl = null)
         {
-            var result = await signInManager.PasswordSignInAsync(model.UserName, model.Password,true ,false);
+            if (returnUrl != null)
+            {
+                TempData["AuthError"] = "You are not authorized to access this page.";
+                ViewData["ReturnUrl"] = returnUrl; // Save it for POST
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginVM model, string? returnUrl)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var result = await signInManager.PasswordSignInAsync(model.UserName, model.Password, true, false);
 
             if (result.Succeeded)
             {
+                if (!string.IsNullOrEmpty(returnUrl))
+                    return LocalRedirect(returnUrl);
+
                 return RedirectToAction("Index", "Employee");
+            }
+
+            // Failed login
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                TempData["AuthError"] = "You are not authorized to access this page.";
             }
             else
             {
                 ModelState.AddModelError("", "Invalid UserName Or Password");
-
             }
+
+            ViewData["ReturnUrl"] = returnUrl; // Preserve returnUrl for next POST
             return View(model);
         }
+
         [HttpPost]
         public async Task<IActionResult> Signout()
         {

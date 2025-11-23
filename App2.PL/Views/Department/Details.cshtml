@@ -1,18 +1,35 @@
 ﻿@model App2.BLL.ModelVM.Department.GetDepartmentVM
 
-<div class="container mt-4">
-    <div class="card shadow-sm border-0">
-        <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">@Model.Name Department</h4>
-            <a asp-action="Index" class="btn btn-light btn-sm">@SharedLocalizer["Back"]</a>
-        </div>
-        <div class="card-body">
-            <p><strong>@SharedLocalizer["Area"]</strong> @Model.Area</p>
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">@Model.Name Department</h4>
+        <a asp-action="Index" class="btn btn-light btn-sm">
+            <i class="fas fa-arrow-left"></i> @SharedLocalizer["Back to List"]
+        </a>
+    </div>
 
-            <h5 class="mt-4">@SharedLocalizer["Employees"]</h5>
-            @if (Model.Employees != null && Model.Employees.Any())
-            {
-                <table class="table table-bordered table-hover mt-2">
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="border rounded p-3 bg-light">
+                    <h5 class="text-primary mb-3">@SharedLocalizer["Department Information"]</h5>
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span class="fw-semibold">@SharedLocalizer["Name"]:</span>
+                        <span>@Model.Name</span>
+                    </div>
+                    <div class="d-flex justify-content-between py-2">
+                        <span class="fw-semibold">@SharedLocalizer["Area"]:</span>
+                        <span>@Model.Area</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="mb-3">@SharedLocalizer["Employees"]</h5>
+        @if (Model.Employees != null && Model.Employees.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
                     <thead class="table-light">
                         <tr>
                             <th>@SharedLocalizer["Name"]</th>
@@ -24,18 +41,21 @@
                         @foreach (var emp in Model.Employees)
                         {
                             <tr>
-                                <td>@emp.Name</td>
+                                <td class="fw-semibold">@emp.Name</td>
                                 <td>@emp.Age</td>
                                 <td>@emp.Salary</td>
                             </tr>
                         }
                     </tbody>
                 </table>
-            }
-            else
-            {
-                <div class="alert alert-secondary">@SharedLocalizer["No employees found in this department."]</div>
-            }
-        </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                @SharedLocalizer["No employees found in this department."]
+            </div>
+        }
     </div>
 </div>
